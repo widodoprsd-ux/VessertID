@@ -26,12 +26,12 @@ const root = path.join(__dirname, '..');
 
 /** @type {string[]} */
 const EXPECTED_DIRS = [
-  'assets-copy/icons',
-  'assets-copy/images',
-  'assets-copy/font',
-  'assets-copy/textures',
-  'assets-copy/styles',
-  'assets-copy/scripts',
+  'assets/icons',
+  'assets/images',
+  'assets/font',
+  'assets/textures',
+  'assets/styles',
+  'assets/scripts',
   'demo'
 ];
 
@@ -40,9 +40,9 @@ const EXPECTED_FILES = [
   'index.html',
   'style.css',
   'search.js',
-  'assets-copy/icons/favicon.svg',
-  'assets-copy/font/font-face.css',
-  'assets-copy/textures/grid.svg'
+  'assets/icons/favicon.svg',
+  'assets/font/font-face.css',
+  'assets/textures/grid.svg'
 ];
 
 // === PRIVATE METHODS ===

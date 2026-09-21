@@ -40,10 +40,7 @@ function _safePath(url) {
   const direct = path.resolve(root, rel);
   if (direct.startsWith(root) && fs.existsSync(direct)) return direct;
 
-  // Fallback to assets-copy/ or assets/ for flat urls like /icons/favicon.svg
-  const inCopy = path.resolve(root, 'assets-copy', rel);
-  if (inCopy.startsWith(root) && fs.existsSync(inCopy)) return inCopy;
-
+  // Fallback to assets/ for flat urls like /icons/favicon.svg
   const inAssets = path.resolve(root, 'assets', rel);
   if (inAssets.startsWith(root) && fs.existsSync(inAssets)) return inAssets;
 

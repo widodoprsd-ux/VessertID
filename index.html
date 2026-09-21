@@ -4,113 +4,211 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Demo Index — Pupputer</title>
+<link rel="preload" href="./assets/font/inter-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./assets/font/inter-bold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="icon" type="image/svg+xml" href="./assets/icons/favicon.svg">
-<link rel="alternate icon" href="./favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="./assets/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="./assets/icons/favicon-16.png">
+<link rel="alternate icon" href="./assets/icons/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="./assets/icons/apple-touch-icon.png">
+<link rel="mask-icon" href="./assets/icons/mask-icon.svg" color="#0066cc">
+<link rel="manifest" href="./assets/manifest.webmanifest">
+<meta name="msapplication-config" content="./assets/browserconfig.xml">
+<meta property="og:title" content="Demo Index — Pupputer">
+<meta property="og:description" content="Production-ready Tag Rendering Pipeline with Isolated Preview and Pure Library Distribution">
+<meta property="og:image" content="./assets/images/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="./assets/images/twitter-card.png">
+<link rel="stylesheet" href="./assets/styles/reset.css">
+<link rel="stylesheet" href="./assets/font/font-face.css">
 <link rel="stylesheet" href="./assets/font/typography.css">
+<link rel="stylesheet" href="./assets/styles/syntax.css">
+<link rel="stylesheet" href="./assets/styles/print.css" media="print">
 <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-<div class="brand-header">
-  <img src="./assets/icons/favicon.svg" alt="Vessert Logo" width="36" height="36" class="brand-icon">
+<header class="brand-header">
+  <img src="./assets/icons/logo.svg" alt="Pupputer" height="38" class="brand-logo">
   <div>
     <h1>Demo Index</h1>
     <p>Rendered from <code>examples/</code> with isolated pipelines.</p>
   </div>
+  <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark/light theme">🌓 Theme</button>
+</header>
+
+<div class="hero-banner-wrap">
+  <picture>
+    <source srcset="./assets/images/hero.avif" type="image/avif">
+    <source srcset="./assets/images/hero.webp" type="image/webp">
+    <img src="./assets/images/hero-banner.jpg" alt="Pupputer Architecture Banner" class="hero-banner" loading="eager">
+  </picture>
 </div>
+
 <div class="search-wrap">
   <img src="./assets/icons/search.svg" alt="" width="18" height="18" class="search-icon">
   <input id="q" placeholder="Search tag...">
 </div>
-<div class="grid" id="grid"><article class="card" data-name="Hello World">
-<h2>Hello World</h2>
+
+<div class="divider-wrap">
+  <img src="./assets/images/divider.svg" alt="" class="section-divider" aria-hidden="true">
+</div>
+
+<main class="grid" id="grid"><article class="card" data-name="Hello World">
+<div class="card-header">
+  <img src="./assets/icons/tag.svg" alt="" width="16" height="16" class="card-tag-icon">
+  <h2>Hello World</h2>
+</div>
 <p>A minimal starter example.</p>
 <a href="demo/hello-world.html">Open demo →</a>
 </article>
 
 <article class="card" data-name="Getting Started">
-<h2>Getting Started</h2>
+<div class="card-header">
+  <img src="./assets/icons/tag.svg" alt="" width="16" height="16" class="card-tag-icon">
+  <h2>Getting Started</h2>
+</div>
 <p>Install and render your first page.</p>
 <a href="demo/getting-started.html">Open demo →</a>
 </article>
 
 <article class="card" data-name="API Reference">
-<h2>API Reference</h2>
+<div class="card-header">
+  <img src="./assets/icons/tag.svg" alt="" width="16" height="16" class="card-tag-icon">
+  <h2>API Reference</h2>
+</div>
 <p>All public functions at a glance.</p>
 <a href="demo/api-reference.html">Open demo →</a>
 </article>
 
 <article class="card" data-name="Release Notes 1.0">
-<h2>Release Notes 1.0</h2>
+<div class="card-header">
+  <img src="./assets/icons/tag.svg" alt="" width="16" height="16" class="card-tag-icon">
+  <h2>Release Notes 1.0</h2>
+</div>
 <p>First stable release of Pupputer.</p>
 <a href="demo/release-1-0.html">Open demo →</a>
 </article>
 
 <article class="card" data-name="Roadmap Q2">
-<h2>Roadmap Q2</h2>
+<div class="card-header">
+  <img src="./assets/icons/tag.svg" alt="" width="16" height="16" class="card-tag-icon">
+  <h2>Roadmap Q2</h2>
+</div>
 <p>What's coming in the next quarter.</p>
 <a href="demo/roadmap-q2.html">Open demo →</a>
 </article>
 
 <article class="card" data-name="Changelog">
-<h2>Changelog</h2>
+<div class="card-header">
+  <img src="./assets/icons/tag.svg" alt="" width="16" height="16" class="card-tag-icon">
+  <h2>Changelog</h2>
+</div>
 <p>Track every change since day one.</p>
 <a href="demo/changelog.html">Open demo →</a>
 </article>
 
 <article class="card" data-name="Halo Dunia">
-<h2>Halo Dunia</h2>
+<div class="card-header">
+  <img src="./assets/icons/tag.svg" alt="" width="16" height="16" class="card-tag-icon">
+  <h2>Halo Dunia</h2>
+</div>
 <p>Contoh dalam Bahasa Indonesia.</p>
 <a href="demo/halo-dunia.html">Open demo →</a>
 </article>
 
 <article class="card" data-name="Bonjour le Monde">
-<h2>Bonjour le Monde</h2>
+<div class="card-header">
+  <img src="./assets/icons/tag.svg" alt="" width="16" height="16" class="card-tag-icon">
+  <h2>Bonjour le Monde</h2>
+</div>
 <p>Exemple en français.</p>
 <a href="demo/bonjour-le-monde.html">Open demo →</a>
 </article>
 
 <article class="card" data-name="Hola Mundo">
-<h2>Hola Mundo</h2>
+<div class="card-header">
+  <img src="./assets/icons/tag.svg" alt="" width="16" height="16" class="card-tag-icon">
+  <h2>Hola Mundo</h2>
+</div>
 <p>Ejemplo en español.</p>
 <a href="demo/hola-mundo.html">Open demo →</a>
 </article>
 
 <article class="card" data-name="こんにちは世界">
-<h2>こんにちは世界</h2>
+<div class="card-header">
+  <img src="./assets/icons/tag.svg" alt="" width="16" height="16" class="card-tag-icon">
+  <h2>こんにちは世界</h2>
+</div>
 <p>日本語のサンプル。</p>
 <a href="demo/konnichiwa-sekai.html">Open demo →</a>
 </article>
 
 <article class="card" data-name="Deep Dive: Rendering Pipeline">
-<h2>Deep Dive: Rendering Pipeline</h2>
+<div class="card-header">
+  <img src="./assets/icons/tag.svg" alt="" width="16" height="16" class="card-tag-icon">
+  <h2>Deep Dive: Rendering Pipeline</h2>
+</div>
 <p>This tag demonstrates how the render pipeline flows from the entry point through validation, option resolution, algorithm transforms, and finally into the template layer where HTML is assembled. It is deliberately long so truncation can be exercised.</p>
 <a href="demo/deep-dive-rendering.html">Open demo →</a>
 </article>
 
 <article class="card" data-name="Migration Guide">
-<h2>Migration Guide</h2>
+<div class="card-header">
+  <img src="./assets/icons/tag.svg" alt="" width="16" height="16" class="card-tag-icon">
+  <h2>Migration Guide</h2>
+</div>
 <p>Step-by-step instructions for migrating from an earlier version, including API changes, renamed options, and recommended upgrade paths for production deployments.</p>
 <a href="demo/migration-guide.html">Open demo →</a>
 </article>
 
 <article class="card" data-name="Default Theme">
-<h2>Default Theme</h2>
+<div class="card-header">
+  <img src="./assets/icons/tag.svg" alt="" width="16" height="16" class="card-tag-icon">
+  <h2>Default Theme</h2>
+</div>
 <p>Rendered with the default light theme.</p>
 <a href="demo/theme-default.html">Open demo →</a>
 </article>
 
 <article class="card" data-name="Dark Theme">
-<h2>Dark Theme</h2>
+<div class="card-header">
+  <img src="./assets/icons/tag.svg" alt="" width="16" height="16" class="card-tag-icon">
+  <h2>Dark Theme</h2>
+</div>
 <p>Rendered with the dark theme preset.</p>
 <a href="demo/theme-dark.html">Open demo →</a>
 </article>
 
 <article class="card" data-name="Sepia Theme">
-<h2>Sepia Theme</h2>
+<div class="card-header">
+  <img src="./assets/icons/tag.svg" alt="" width="16" height="16" class="card-tag-icon">
+  <h2>Sepia Theme</h2>
+</div>
 <p>Rendered with the sepia reading theme.</p>
 <a href="demo/theme-sepia.html">Open demo →</a>
 </article>
+</main>
+
+<div class="divider-wrap">
+  <img src="./assets/images/divider.svg" alt="" class="section-divider" aria-hidden="true">
 </div>
+
+<footer class="site-footer">
+  <div class="footer-status">
+    <img src="./assets/icons/shield-check.svg" alt="Verified" width="18" height="18" class="status-icon">
+    <span>Dual-Pipeline Architecture Verified &bull; Pure Library in <code>dist/</code></span>
+  </div>
+  <nav class="footer-links">
+    <a href="./assets/robots.txt">robots.txt</a>
+    <a href="./assets/sitemap.xml">sitemap.xml</a>
+    <a href="./assets/humans.txt">humans.txt</a>
+    <a href="./assets/security.txt">security.txt</a>
+    <a href="./assets/font/README.md">font license</a>
+  </nav>
+</footer>
+
+<script src="./assets/scripts/theme-toggle.js"></script>
+<script src="./assets/scripts/back-to-top.js"></script>
 <script src="./search.js"></script>
 </body>
 </html>

@@ -3,16 +3,15 @@
  * Layer     : script
  * Caller    : npm run build:assets
  *             npm run build
- * Calls     : src/lib/copy-assets.js (copyAssets)
- *             scripts/generate-placeholders.js (via child process, optional)
+ * Calls     : src/asset-registry.js (ASSET_GROUPS)
+ *             node:fs, node:path
  *
- * Variables : __dirname, root, OUT
- * Operations: main        (public)
- *             _ensureDirs (private)
+ * Variables : __dirname, root
+ * Operations: main (public)
  * Exports   : (none — CLI script)
  *
- * Output    : <root>/assets-copy/** — flat mirror consumed by build-preview.
- * Never touches dist/. Library build is unaffected by asset failures.
+ * Validates and reports canonical assets in assets/.
+ * Never touches dist/ or creates duplicate directories.
  */
 
 // === IMPORTS ===
@@ -20,44 +19,31 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { copyAssets } from '../src/lib/copy-assets.js';
+import { ASSET_GROUPS } from '../src/asset-registry.js';
 
 // === VARIABLES ===
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, '..');
-const OUT = path.join(root, 'assets-copy');
-
-// === PRIVATE METHODS ===
-
-/**
- * Ensure the top-level destination directories exist.
- * Called only by `main` inside this file.
- *
- * @returns {void}
- */
-function _ensureDirs() {
-  for (const dir of ['icons', 'images', 'font', 'textures', 'styles', 'scripts']) {
-    fs.mkdirSync(path.join(OUT, dir), { recursive: true });
-  }
-}
 
 // === PUBLIC METHODS ===
 
 /**
- * Entry point. Copies every asset group from `assets/` into `assets-copy/`.
+ * Entry point. Audits every asset group directly inside `assets/`.
  *
  * @returns {void}
  */
 function main() {
-  _ensureDirs();
-  const summary = copyAssets(root, OUT);
-
-  const total = summary.reduce((n, s) => n + s.copied, 0);
-  for (const s of summary) {
-    console.log(`  · ${s.id.padEnd(9)} ${String(s.copied).padStart(3)} → ${s.to}/`);
+  let total = 0;
+  for (const group of ASSET_GROUPS) {
+    const srcDir = path.join(root, group.from);
+    const count = fs.existsSync(srcDir)
+      ? fs.readdirSync(srcDir).filter(f => group.types.includes(path.extname(f).toLowerCase())).length
+      : 0;
+    total += count;
+    console.log(`  · ${group.id.padEnd(9)} ${String(count).padStart(3)} in ${group.from}/`);
   }
-  console.log(`✔ [assets] ${total} files across ${summary.length} groups`);
+  console.log(`✔ [assets] ${total} files ready in assets/ across ${ASSET_GROUPS.length} groups`);
 }
 
 main();
