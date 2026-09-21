@@ -1,0 +1,15 @@
+@font-face {
+  font-family: 'VessertMono';
+  src: local('ui-monospace'), local('SFMono-Regular'), local('Menlo'), local('Consolas'), local('Liberation Mono'), monospace;
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'VessertSans';
+  src: local('-apple-system'), local('BlinkMacSystemFont'), local('Segoe UI'), local('Roboto'), local('Helvetica Neue'), sans-serif;
+  font-weight: 300 800;
+  font-style: normal;
+  font-display: swap;
+}

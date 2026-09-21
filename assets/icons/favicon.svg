@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <defs>
+    <linearGradient id="vGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
+    <filter id="subtleShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#0f172a" flood-opacity="0.15" />
+    </filter>
+  </defs>
+  <rect width="48" height="48" rx="10" fill="url(#vGrad)" filter="url(#subtleShadow)" />
+  <!-- V Shape with geometric precision -->
+  <path d="M12 14 L24 35 L36 14 L30.5 14 L24 26 L17.5 14 Z" fill="#ffffff" />
+  <!-- Diamond assertion accent -->
+  <circle cx="24" cy="14" r="2.5" fill="#93c5fd" />
+</svg>

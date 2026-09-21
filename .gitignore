@@ -1,8 +1,8 @@
 node_modules/
 dist/
 demo/
-style.css
-search.js
+/style.css
+/search.js
 *.tgz
 .DS_Store
 npm-debug.log*
