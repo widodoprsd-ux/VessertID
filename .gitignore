@@ -1,6 +1,7 @@
 node_modules/
 dist/
 demo/
+assets-copy/
 /style.css
 /search.js
 *.tgz

@@ -3,9 +3,10 @@
  * Layer     : script
  * Caller    : npm start
  *             npm run dev
- * Calls     : node:http, node:fs, node:path
+ * Calls     : src/algorithm/mime-type.js (mimeType)
+ *             node:http, node:fs, node:path
  *
- * Variables : __dirname, root, PORT, MIME
+ * Variables : __dirname, root, PORT
  * Operations: main        (public)
  *             _safePath   (private)
  *             _serve      (private)
@@ -18,26 +19,13 @@ import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { mimeType } from '../src/algorithm/mime-type.js';
 
 // === VARIABLES ===
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, '..');
 const PORT = 3000;
-
-const MIME = Object.freeze({
-  '.html': 'text/html; charset=utf-8',
-  '.js':   'text/javascript; charset=utf-8',
-  '.css':  'text/css; charset=utf-8',
-  '.json': 'application/json; charset=utf-8',
-  '.svg':  'image/svg+xml',
-  '.png':  'image/png',
-  '.jpg':  'image/jpeg',
-  '.jpeg': 'image/jpeg',
-  '.ico':  'image/x-icon',
-  '.woff2': 'font/woff2',
-  '.woff':  'font/woff'
-});
 
 // === PRIVATE METHODS ===
 
@@ -49,8 +37,17 @@ const MIME = Object.freeze({
  */
 function _safePath(url) {
   const rel = url === '/' ? 'index.html' : url.slice(1);
-  const full = path.resolve(root, rel);
-  return full.startsWith(root) ? full : null;
+  const direct = path.resolve(root, rel);
+  if (direct.startsWith(root) && fs.existsSync(direct)) return direct;
+
+  // Fallback to assets-copy/ or assets/ for flat urls like /icons/favicon.svg
+  const inCopy = path.resolve(root, 'assets-copy', rel);
+  if (inCopy.startsWith(root) && fs.existsSync(inCopy)) return inCopy;
+
+  const inAssets = path.resolve(root, 'assets', rel);
+  if (inAssets.startsWith(root) && fs.existsSync(inAssets)) return inAssets;
+
+  return direct.startsWith(root) ? direct : null;
 }
 
 /**
@@ -74,7 +71,7 @@ function _serve(req, res) {
       return res.end(`Not found: ${url}`);
     }
     res.writeHead(200, {
-      'Content-Type': MIME[path.extname(full)] ?? 'application/octet-stream'
+      'Content-Type': mimeType(full)
     });
     res.end(data);
   });

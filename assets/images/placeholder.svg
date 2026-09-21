@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Placeholder">
+  <defs>
+    <pattern id="stripes" width="20" height="20" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="10" height="20" fill="#f0f0f0"/>
+      <rect x="10" width="10" height="20" fill="#e0e0e0"/>
+    </pattern>
+  </defs>
+  <rect width="400" height="300" fill="url(#stripes)"/>
+  <text x="200" y="155" text-anchor="middle" font-family="system-ui" font-size="18" fill="#888">400 × 300</text>
+</svg>

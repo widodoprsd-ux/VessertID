@@ -1,0 +1,22 @@
+/* Inter — self-hosted. All weights, all formats. */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    url('./inter-regular.woff2') format('woff2'),
+    url('./inter-regular.woff')  format('woff'),
+    url('./inter-regular.ttf')   format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src:
+    url('./inter-bold.woff2') format('woff2'),
+    url('./inter-bold.woff')  format('woff');
+}
