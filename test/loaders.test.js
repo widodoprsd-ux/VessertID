@@ -2,7 +2,7 @@
  * File      : loaders.test.js
  * Layer     : test
  * Caller    : npm test
- * Calls     : src/loaders/index.js
+ * Calls     : src/index.js (central entry)
  *             node:test, node:assert/strict, node:fs, node:path, node:url
  *
  * Variables : __dirname, root
@@ -25,7 +25,7 @@ import {
   loadAsset,
   loadTextAsset,
   loadBinaryAsset
-} from '../src/loaders/index.js';
+} from '../src/index.js';
 
 // === VARIABLES ===
 

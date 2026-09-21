@@ -33,6 +33,32 @@ const entry = path.join(root, 'src/index.js');
 const DIST = path.join(root, 'dist');
 
 /**
+ * Lightweight browser shim for Node built-in modules when building browser IIFE bundle.
+ * @type {import('esbuild').Plugin}
+ */
+const browserShimPlugin = {
+  name: 'browser-shim',
+  setup(build) {
+    build.onResolve({ filter: /^node:(fs|path)/ }, args => ({
+      path: args.path,
+      namespace: 'browser-shim'
+    }));
+    build.onLoad({ filter: /.*/, namespace: 'browser-shim' }, args => {
+      if (args.path.includes('path')) {
+        return {
+          contents: 'export default { normalize: p => p, extname: p => { const i = p.lastIndexOf("."); return i === -1 ? "" : p.slice(i); } }; export const normalize = p => p; export const extname = p => { const i = p.lastIndexOf("."); return i === -1 ? "" : p.slice(i); };',
+          loader: 'js'
+        };
+      }
+      return {
+        contents: 'export default { existsSync: () => false, readFileSync: () => "" }; export const existsSync = () => false; export const readFileSync = () => "";',
+        loader: 'js'
+      };
+    });
+  }
+};
+
+/**
  * Bundle targets.
  * @type {Array<{
  *   format: 'esm' | 'cjs' | 'iife',
@@ -57,11 +83,16 @@ const TARGETS = [
  * @returns {Promise<void>} Resolves when the bundle is written.
  */
 function _bundle(target) {
-  const { outfile, ...rest } = target;
+  const { outfile, format, ...rest } = target;
+  const isBrowser = format === 'iife';
+
   return build({
     entryPoints: [entry],
     bundle: true,
     outfile: path.join(DIST, outfile),
+    format,
+    external: isBrowser ? [] : ['node:*', 'fs', 'path', 'url'],
+    plugins: isBrowser ? [browserShimPlugin] : [],
     ...rest
   });
 }
