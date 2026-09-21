@@ -28,40 +28,28 @@
 </head>
 <body>
 <header class="brand-header">
-  <img src="./assets/icons/logo.svg" alt="Pupputer" height="38" class="brand-logo">
-  <div>
+  <div class="brand-top">
+    <div class="brand-logo-wrap">
+      <img src="./assets/icons/logo.svg" alt="Pupputer" height="28" class="brand-logo">
+    </div>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark/light theme">🌓 Theme</button>
+  </div>
+  <div class="brand-intro">
     <h1>Demo Index</h1>
     <p>Rendered from <code>examples/</code> with isolated pipelines.</p>
   </div>
-  <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark/light theme">🌓 Theme</button>
 </header>
 
-<div class="hero-banner-wrap">
-  <picture>
-    <source srcset="./assets/images/hero.avif" type="image/avif">
-    <source srcset="./assets/images/hero.webp" type="image/webp">
-    <img src="./assets/images/hero-banner.jpg" alt="Pupputer Architecture Banner" class="hero-banner" loading="eager">
-  </picture>
-</div>
-
 <div class="search-wrap">
-  <img src="./assets/icons/search.svg" alt="" width="18" height="18" class="search-icon">
-  <input id="q" placeholder="Search tag...">
-</div>
-
-<div class="divider-wrap">
-  <img src="./assets/images/divider.svg" alt="" class="section-divider" aria-hidden="true">
+  <img src="./assets/icons/search.svg" alt="" width="16" height="16" class="search-icon">
+  <input id="q" type="search" placeholder="Search tag...">
 </div>
 
 <main class="grid" id="grid">{{cards}}</main>
 
-<div class="divider-wrap">
-  <img src="./assets/images/divider.svg" alt="" class="section-divider" aria-hidden="true">
-</div>
-
 <footer class="site-footer">
   <div class="footer-status">
-    <img src="./assets/icons/shield-check.svg" alt="Verified" width="18" height="18" class="status-icon">
+    <img src="./assets/icons/shield-check.svg" alt="Verified" width="16" height="16" class="status-icon">
     <span>Dual-Pipeline Architecture Verified &bull; Pure Library in <code>dist/</code></span>
   </div>
   <nav class="footer-links">
