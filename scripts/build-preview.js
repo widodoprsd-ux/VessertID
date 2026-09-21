@@ -14,14 +14,17 @@
  * Operations: main          (public)
  *             _read         (private)
  *             _write        (private)
+ *             _atomicWrite  (private)
  *             _fill         (private)
  *             _writeDemos   (private)
  *             _writeIndex   (private)
  *             _writeAssets  (private)
+ *             _writeMaintenance (private)
  * Exports   : (none — CLI script)
  *
  * Output    : demo/*.html, index.html, style.css, search.js
  * Never touches dist/. Preview must survive a failed library build.
+ * Uses atomic writes so an error never leaves a broken or empty index.html.
  */
 
 // === IMPORTS ===
@@ -75,6 +78,21 @@ function _write(rel, content) {
 }
 
 /**
+ * Atomically write a file relative to the project root using a temporary file.
+ * If the write fails halfway, the target file remains completely untouched and intact.
+ * @param {string} rel - Relative path.
+ * @param {string} content - Content to write.
+ * @returns {void}
+ */
+function _atomicWrite(rel, content) {
+  const full = path.join(root, rel);
+  const temp = `${full}.tmp.${Date.now()}`;
+  fs.mkdirSync(path.dirname(full), { recursive: true });
+  fs.writeFileSync(temp, content, 'utf8');
+  fs.renameSync(temp, full);
+}
+
+/**
  * Replace `{{key}}` placeholders in a template string.
  * @param {string} tpl - Template string.
  * @param {Record<string, string>} vars - Substitution map.
@@ -101,7 +119,7 @@ function _writeDemos() {
 
       const slug = tag.slug ?? tag.name.toLowerCase().replace(/\s+/g, '-');
       const html = renderTag(tag, perTag);
-      _write(`demo/${slug}.html`, html);
+      _atomicWrite(`demo/${slug}.html`, html);
 
       all.push({
         name: tag.name,
@@ -131,30 +149,107 @@ function _writeIndex(tags) {
     }))
     .join('\n');
 
-  _write('index.html', _fill(indexTpl, { cards }));
+  _atomicWrite('index.html', _fill(indexTpl, { cards }));
 }
 
 /**
- * Copy static assets from templates/ to root.
+ * Copy static assets from templates/ to root safely.
  * @returns {void}
  */
 function _writeAssets() {
-  _write('style.css', _read('templates/style.css'));
-  _write('search.js', _read('templates/search.js'));
+  _atomicWrite('style.css', _read('templates/style.css'));
+  _atomicWrite('search.js', _read('templates/search.js'));
+}
+
+/**
+ * Generate a graceful maintenance fallback page if enabled or when initial build fails.
+ * @param {string} message - Reason for maintenance or status message.
+ * @returns {void}
+ */
+function _writeMaintenance(message = 'Sistem sedang dalam pembaruan rutin. Layanan akan segera kembali stabil.') {
+  const maintenanceHtml = `<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maintenance — Pupputer</title>
+<link rel="stylesheet" href="./style.css">
+<style>
+.maintenance-box {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 2.5rem 2rem;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  max-width: 620px;
+  margin: 4rem auto;
+  text-align: center;
+}
+.maintenance-box h1 {
+  font-size: 1.6rem;
+  margin-bottom: 0.8rem;
+  color: #1e293b;
+}
+.maintenance-box p {
+  color: #64748b;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+.status-badge {
+  display: inline-block;
+  padding: 0.35rem 0.85rem;
+  background: #fef3c7;
+  color: #92400e;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+</style>
+</head>
+<body>
+<div class="maintenance-box">
+  <div class="status-badge">● Pemeliharaan Sistem</div>
+  <h1>Sedang dalam Maintenance</h1>
+  <p>${message}</p>
+  <p style="font-size: 0.85rem; color: #94a3b8;">Halaman akan otomatis diperbarui begitu proses selesai.</p>
+</div>
+</body>
+</html>
+`;
+  _atomicWrite('index.html', maintenanceHtml);
 }
 
 // === PUBLIC METHODS ===
 
 /**
  * Entry point.
+ * Ensures the preview builds cleanly or falls back safely without breaking index.html.
  * @returns {void}
  */
 function main() {
-  const tags = _writeDemos();
-  _writeIndex(tags);
-  _writeAssets();
+  if (process.env.MAINTENANCE_MODE === 'true') {
+    _writeAssets();
+    _writeMaintenance();
+    console.log('ℹ [preview] Maintenance mode aktif — index.html menampilkan status pemeliharaan.');
+    return;
+  }
 
-  console.log(`✔ [preview] ${tags.length} demos across ${EXAMPLES.length} example groups`);
+  try {
+    const tags = _writeDemos();
+    _writeIndex(tags);
+    _writeAssets();
+    console.log(`✔ [preview] ${tags.length} demos across ${EXAMPLES.length} example groups`);
+  } catch (err) {
+    console.error('⚠ [preview] Build preview mengalami kendala saat render:', err.message);
+    const hasExistingIndex = fs.existsSync(path.join(root, 'index.html'));
+    if (!hasExistingIndex) {
+      _writeAssets();
+      _writeMaintenance('Sedang mempersiapkan lingkungan preview...');
+    } else {
+      console.log('🛡 [preview] index.html yang stabil sebelumnya tetap dipertahankan (tidak dirusak).');
+    }
+  }
 }
 
 main();
