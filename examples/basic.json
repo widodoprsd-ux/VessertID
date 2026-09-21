@@ -1,0 +1,5 @@
+[
+  { "name": "Hello World", "description": "A minimal starter example." },
+  { "name": "Getting Started", "description": "Install and render your first page." },
+  { "name": "API Reference", "description": "All public functions at a glance." }
+]

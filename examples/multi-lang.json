@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Halo Dunia",
+    "slug": "halo-dunia",
+    "description": "Contoh dalam Bahasa Indonesia.",
+    "tags": ["id"]
+  },
+  {
+    "name": "Bonjour le Monde",
+    "slug": "bonjour-le-monde",
+    "description": "Exemple en français.",
+    "tags": ["fr"]
+  },
+  {
+    "name": "Hola Mundo",
+    "slug": "hola-mundo",
+    "description": "Ejemplo en español.",
+    "tags": ["es"]
+  },
+  {
+    "name": "こんにちは世界",
+    "slug": "konnichiwa-sekai",
+    "description": "日本語のサンプル。",
+    "tags": ["ja"]
+  }
+]

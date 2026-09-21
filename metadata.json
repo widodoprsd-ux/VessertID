@@ -1,0 +1,6 @@
+{
+  "name": "Pupputer Demo",
+  "description": "Render tags into static HTML pages with isolated preview and library pipelines.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

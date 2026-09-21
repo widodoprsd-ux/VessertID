@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Release Notes 1.0",
+    "slug": "release-1-0",
+    "description": "First stable release of Pupputer.",
+    "author": "Alice",
+    "date": "2025-03-15",
+    "tags": ["release", "stable"]
+  },
+  {
+    "name": "Roadmap Q2",
+    "slug": "roadmap-q2",
+    "description": "What's coming in the next quarter.",
+    "author": "Bob",
+    "date": "2025-04-01",
+    "tags": ["planning"]
+  },
+  {
+    "name": "Changelog",
+    "slug": "changelog",
+    "description": "Track every change since day one.",
+    "author": "Carol",
+    "date": "2025-05-20",
+    "tags": ["history", "release"]
+  }
+]

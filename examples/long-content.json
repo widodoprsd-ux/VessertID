@@ -1,0 +1,18 @@
+[
+  {
+    "name": "Deep Dive: Rendering Pipeline",
+    "slug": "deep-dive-rendering",
+    "description": "This tag demonstrates how the render pipeline flows from the entry point through validation, option resolution, algorithm transforms, and finally into the template layer where HTML is assembled. It is deliberately long so truncation can be exercised.",
+    "author": "Engineering",
+    "date": "2025-02-10",
+    "tags": ["internals", "guide", "long"]
+  },
+  {
+    "name": "Migration Guide",
+    "slug": "migration-guide",
+    "description": "Step-by-step instructions for migrating from an earlier version, including API changes, renamed options, and recommended upgrade paths for production deployments.",
+    "author": "Docs Team",
+    "date": "2025-01-05",
+    "tags": ["migration", "guide"]
+  }
+]

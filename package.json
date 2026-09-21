@@ -1,0 +1,58 @@
+{
+  "name": "pupputer-demo",
+  "version": "1.0.0",
+  "description": "Render tags into static HTML pages. One source, two isolated pipelines.",
+  "type": "module",
+  "main": "./dist/pupputer.cjs",
+  "module": "./dist/pupputer.js",
+  "browser": "./dist/pupputer.min.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "browser": "./dist/pupputer.min.js",
+      "import": "./dist/pupputer.js",
+      "require": "./dist/pupputer.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "pretest": "node scripts/lint-anatomy.js",
+    "test": "node --test test/*.test.js",
+    "typecheck": "tsc -p jsconfig.json --noEmit",
+    "types": "tsc -p jsconfig.json",
+    "build:preview": "node scripts/build-preview.js",
+    "build:lib": "node scripts/build-lib.js",
+    "build": "concurrently -n preview,lib -c cyan,magenta \"npm:build:preview\" \"npm:build:lib\"",
+    "start": "node scripts/serve.js",
+    "watch": "node scripts/watch.js",
+    "dev": "npm run build:preview && npm start",
+    "lint": "npm run pretest && npm run typecheck",
+    "prepublishOnly": "npm test && npm run typecheck && npm run build:lib"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0",
+    "esbuild": "^0.25.0",
+    "typescript": "^5.5.0"
+  },
+  "keywords": [
+    "pupputer",
+    "static-site",
+    "generator",
+    "html",
+    "tags"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourname/pupputer-demo.git"
+  }
+}

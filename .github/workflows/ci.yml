@@ -1,0 +1,105 @@
+name: CI & Publish
+
+on:
+  push:
+    branches: ["main"]
+    tags: ["v*"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  test-preview:
+    name: Preview Pipeline (Test & Build)
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      - name: Lint file anatomy
+        run: npm run pretest
+
+      - name: Build preview
+        run: npm run build:preview
+
+      - name: Verify preview output files
+        run: |
+          test -f index.html
+          test -f style.css
+          test -f search.js
+          test -d demo
+          test -f demo/hello-world.html
+          echo "✔ Preview artifacts verified successfully"
+
+  test-lib:
+    name: Library Pipeline (Test, Types & Bundle)
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      - name: Check TypeScript types from JSDoc
+        run: npm run typecheck
+
+      - name: Build library bundle
+        run: npm run build:lib
+
+      - name: Run unit & isolation tests
+        run: npm test
+
+      - name: Verify library output files
+        run: |
+          test -f dist/pupputer.js
+          test -f dist/pupputer.cjs
+          test -f dist/pupputer.min.js
+          test -f dist/index.d.ts
+          echo "✔ Library artifacts verified successfully"
+
+  publish:
+    name: Publish to NPM
+    needs: [test-preview, test-lib]
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      - name: Run validation and build
+        run: npm run prepublishOnly
+
+      - name: Publish package
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

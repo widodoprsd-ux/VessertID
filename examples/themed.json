@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Default Theme",
+    "slug": "theme-default",
+    "description": "Rendered with the default light theme.",
+    "_theme": "default"
+  },
+  {
+    "name": "Dark Theme",
+    "slug": "theme-dark",
+    "description": "Rendered with the dark theme preset.",
+    "_theme": "dark"
+  },
+  {
+    "name": "Sepia Theme",
+    "slug": "theme-sepia",
+    "description": "Rendered with the sepia reading theme.",
+    "_theme": "sepia"
+  }
+]
