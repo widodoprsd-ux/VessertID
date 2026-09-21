@@ -108,6 +108,11 @@ test('assets/icons ships SVG and PNG and ICO', () => {
 test('assets/font ships a font-face.css and a license', () => {
   assert.ok(fs.existsSync(path.join(root, 'assets/font/font-face.css')));
   assert.ok(fs.existsSync(path.join(root, 'assets/font/OFL.txt')));
+  assert.ok(fs.existsSync(path.join(root, 'assets/font/inter-regular.woff2')));
+  assert.ok(fs.existsSync(path.join(root, 'assets/font/inter-regular.woff')));
+  assert.ok(fs.existsSync(path.join(root, 'assets/font/inter-regular.ttf')));
+  assert.ok(fs.existsSync(path.join(root, 'assets/font/inter-bold.woff2')));
+  assert.ok(fs.existsSync(path.join(root, 'assets/font/inter-bold.woff')));
 });
 
 test('textures are inline-safe (SVG-only members present)', () => {
